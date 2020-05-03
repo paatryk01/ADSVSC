@@ -367,7 +367,7 @@ const BST = function(){ // Definicja konstruktora.
                 node = node.left;
                 return node;
             } // Element do usunięcia posiada dwa elementy pochodne. Trzeba znaleźć najwyższy element, ale niższy od usuwanego.
-            let aux = this.findMinFrom(node.right); // Metoda wyszukuje ten element w/w.
+            let aux = this.findMinFrom(node.right); // Metoda wyszukuje ten element w/w. Element po prawej stronie roota, ale najbardziej odsunięty w lewo.
             node.key = aux.key;
             node.right = this.removeHelper(node.right, aux.key);
             return node;
@@ -441,6 +441,124 @@ const Hashtable = function(){
     };
 };
 
+// SET ZBIÓR
 
+function Set(){
+    this.data = []; // Dane zbioru znajdują się w tablicy, bo nie muszą być uporządkowane więc nie potrzebują kluczy.
+    this.has = function(value){ // Sprawdzamy czy wartość przekazana jako argument istnieje w zbiorze. Zbiór posiada tylko unikalne wartości.
+        if(this.data.indexOf(value) > -1){
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    this.length = function () {
+        return this.data.length;
+    };
+    this.view = function () {
+        return this.data;
+    };
+    this.insert = function(value){ // Dodawanie nowej wartości do zbioru.
+        if(this.has(value)){
+            return false;
+        }
+        else {
+            this.data.push(value);
+        }
+    };
+    this.remove = function(value){ // Usuwanie wartości podanej w argumencie.
+        const index = this.data.indexOf(value);
+        if(index > -1){
+            this.data.splice(index, 1);
+        }
+    };
+    this.union = function(otherSet){ // Argumentem jest instancja klasy Set, czyli inny zbiór. W wyniku tej metody zwracamy nowy zbiór.
+        // W wyniku tej metody zwracamy nowy zbiór, który zawiera elementy ze zbioru na którym wykonano UNION, oraz elementy ze zbioru przekazanego w argumencie.
+        const toReturn = new Set(); // Tworzymy nowy zbiór, który jest przypisany do tymczasowej zmiennej toReturn.
+            for(let i = 0; i < this.length(); i++){
+                toReturn.insert(this.data[i]); // Dodajemy do nowego zbioru zawartość poprzedniego zbioru.
+            }
+            for(let i = 0; i < otherSet.length(); i++){
+                if(!toReturn.has(otherSet.data[i])){ // Jeżeli element z otherSet nie istnieje w nowym zbiorze toReturn to go dodajemy.
+                    toReturn.insert(otherSet.data[i])
+                }
+            }
+        return toReturn; // Zwracamy nowy zbiór stworzony z 2 wybranych zbiorów.
+    };
+    this.intersect = function(otherSet){ // Zwracamy nowy zbiór z wartościami powtarzające się w danych 2 zbiorach.
+        const toReturn = new Set(); // Tworzymy nowy zbiór, który jest przypisany do tymczasowej zmiennej toReturn.
+        for(let i = 0; i < this.length(); i++){ 
+            if(otherSet.has(this.data[i])){ // Jeżeli otherSet posiada wartość i zbioru to dodajemy go do nowego zbioru.
+                toReturn.insert(this.data[i]);
+            }
+        }
+        return toReturn;
+    };
+    this.differences = function(otherSet){ // Zwracamy nowy zbiór z wartościami, które się nie powtarzają
+        const toReturn = new Set(); // Tworzymy nowy zbiór, który jest przypisany do tymczasowej zmiennej toReturn.
+        for(let i = 0; i < this.length(); i++){
+            if(!otherSet.has(this.data[i])){ // Jeżeli othetSet nie posiada danej wartości i zbioru, to dodajemy go do nowego zbioru.
+                toReturn.insert(this.data[i]);
+            }
+        }
+        return toReturn;
+    }
+    this.clear = function(){
+        this.data = [];
+    }
+}
 
+// MAP - SŁÓWNIK
+
+class Map { // Struktura, która zawiera klucz oraz wartość tego klucza. Klucze są unikalne.
+    constructor(){
+        this.data = {}; // Początkowo pusty obiekt słownika.
+        this.mapSize = 0;
+    }
+    add(key, value){ // Dodawanie klccza i jego wartości do obiektu this.data.
+        this.data[key] = value;
+        this.mapSize++;
+    }
+    remove(key) { // Usuwanie klccza i jego wartości do obiektu this.data.
+        delete this.data[key];
+        this.mapSize--;
+    }
+    has(key){ // Czy dany słownik zawiera dany klucz.
+        return key in this.data;
+    }
+    get(key){ // Zwracamy wartość klucza, jeżeli on istnieje.
+        return this.has(key) ? this.data[key] : undefined;
+    }
+    clear(){ // Czyścimy cały słownik.
+        this.data = {};
+        this.mapSize = 0;
+    }
+    size(){ // Rozmiar słownika.
+        return this.mapSize;
+    }
+    keys(){ // Wyświetlamy tablicę z wszystkimi kluczami.
+        const keys = [];
+        for(let key in this.data){
+            keys.push(key);
+        }
+        return keys;
+    }
+    values() { // Wyświetlamy tablicę z wszystkimi wartościami.
+        const values = [];
+        for(let key in this.data){
+            if(this.has(key)){
+                values.push(this.data[key]);
+            } 
+        }
+        return values;
+    }
+    viewAll(){ // Zwracamy cały słownik.
+        for(let key in this.data){
+            console.log(`${key} -> ${this.data}`)
+        }
+    }
+}
+
+// 
 
