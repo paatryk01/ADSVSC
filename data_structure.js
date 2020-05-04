@@ -560,5 +560,93 @@ class Map { // Struktura, która zawiera klucz oraz wartość tego klucza. Klucz
     }
 }
 
-// 
+// SET ZBIÓR CLASS
+
+class Set{
+    constructor(){
+        this.data = [];
+    };
+    has(value){
+        if(this.data.indexOf(value) > -1){
+            return true;
+        }
+        return false;
+    };
+    length(){
+        this.data.length;
+    };
+    view(){
+        return this.data;
+    };
+    clear(){
+        this.data = [];
+    }
+    insert(value){
+        if(!this.has(value)){
+            this.data.push(value);
+        }
+        else {
+            console.log('this value is exisiting in this set')
+        }
+    };
+    remove(value){
+        const index = this.data.indexOf(value);
+        if(index > -1){
+            this.data.splice(index, 1)
+        }
+        else{
+            console.log(`${value} isn't exist in this set`);
+        } 
+    };
+    union(otherSet){
+        const toReturn = new Set();
+        for(let elem of this.data){
+            toReturn.insert(elem);
+        }
+        for(let elem of otherSet.data){
+            if(!toReturn.has(elem)){
+                toReturn.insert(elem);
+            }
+        }
+        return toReturn.data;
+    }
+    intersect(otherSet){
+        const toReturn = new Set();
+        for(let elem of this.data){
+            if(otherSet.has(elem)){
+                toReturn.insert(elem);
+            }
+        }
+        return toReturn.data;
+    }
+    differences(otherSet){
+        const toReturn = new Set();
+            for(let elem of this.data){
+                if(!otherSet.has(elem)){
+                    toReturn.insert(elem);
+                }
+            }
+            for(let elem of otherSet.data){
+                if(!this.has(elem)){
+                    toReturn.insert(elem);
+                }
+            }
+        return toReturn.data;
+    }
+}
+
+const set = new Set
+set.insert(4)
+set.insert(41)
+set.insert(211)
+set.insert(5)
+const set2 = new Set
+set2.insert(423)
+set2.insert(5)
+set2.insert(211)
+set2.insert(777)
+
+set.differences(set2)
+
+//
 
