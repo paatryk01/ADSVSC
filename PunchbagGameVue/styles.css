@@ -1,0 +1,56 @@
+body {
+    background: url(imgs/bg.jpg) no-repeat;
+    background-size: cover;
+}
+
+#bag {
+    width:200px;
+    height:500px;
+    margin:0 auto;
+    background: url(imgs/bag.png) no-repeat center;
+    background-size: 80%;
+}
+
+#bag .burst {
+    width:200px;
+    height:500px;
+    margin:0 auto;
+    background: url(imgs/bag-burst.png) no-repeat center;
+    background-size: 80%;
+}
+
+#bag-health {
+    width:200px;
+    border: 2px solid #333;
+    margin: 0 auto 20px auto;
+}
+
+#bag-health div {
+    background: crimson;
+    height: 20px;
+}
+
+#controls {
+    width: 160px;
+    margin: 0 auto;
+}
+
+#controls .button-punch {
+    background: green;
+    color: black;
+    font-size: 20px;
+    padding: 5px;
+    border: solid white 2px;
+    border-radius: 5px;
+}
+
+#controls .button-restart {
+    background: red;
+    color: black;
+    font-size: 20px;
+    padding: 5px;
+    border: solid white 2px;
+    border-radius: 5px;
+}
+
+
